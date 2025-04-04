@@ -1,23 +1,25 @@
 package log
 
 import kotlin.math.abs
-import kotlin.math.pow
 
 private const val ACCURACY = 1e-3
 
 class Ln: (Double) -> Double {
     override operator fun invoke(x: Double): Double {
-        var curRes = 0.0
-        val expectedRes = kotlin.math.ln(x)
-        var i = 1
-        while (abs(curRes - expectedRes) > ACCURACY) {
-            curRes += (-1.0).pow(i - 1) * (x - 1).pow(i) / i
-            i++
-        }
-        return curRes
-    }
-}
+        if (x <= 0) throw IllegalArgumentException("ln(x) is undefined for x <= 0")
+        if (x == 1.0) return 0.0
 
-fun main() {
-    println(Ln()(12.0))
+        val y = (x - 1) / (x + 1)
+        var term = y
+        var sum = term
+        var n = 1
+
+        while (abs(term) > ACCURACY) {
+            term *= y * y
+            sum += term / (2 * n + 1)
+            n++
+        }
+
+        return 2 * sum
+    }
 }

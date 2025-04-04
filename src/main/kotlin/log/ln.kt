@@ -9,10 +9,15 @@ class Ln: (Double) -> Double {
     override operator fun invoke(x: Double): Double {
         var curRes = 0.0
         val expectedRes = kotlin.math.ln(x)
-        val i = 1
+        var i = 1
         while (abs(curRes - expectedRes) > ACCURACY) {
             curRes += (-1.0).pow(i - 1) * (x - 1).pow(i) / i
+            i++
         }
         return curRes
     }
+}
+
+fun main() {
+    println(Ln()(12.0))
 }

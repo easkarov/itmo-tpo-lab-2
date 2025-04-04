@@ -38,3 +38,8 @@ class SystemEquation(
         return res
     }
 }
+
+fun main() {
+    println(SystemEquation(
+    ).invoke(2.0))
+}

@@ -93,13 +93,13 @@ internal class FunctionTest {
         @BeforeAll
         fun init() {
             try {
-                val secIn = FileReader("src/main/resources/CsvFiles/Inputs/SecIn.csv")
-                val cscIn = FileReader("src/main/resources/CsvFiles/Inputs/CscIn.csv")
-                val sinIn = FileReader("src/main/resources/CsvFiles/Inputs/SinIn.csv")
-                val lnIn = FileReader("src/main/resources/CsvFiles/Inputs/LnIn.csv")
-                val log3In = FileReader("src/main/resources/CsvFiles/Inputs/Log3In.csv")
-                val log5In = FileReader("src/main/resources/CsvFiles/Inputs/Log5In.csv")
-                val log10In = FileReader("src/main/resources/CsvFiles/Inputs/Log10In.csv")
+                val secIn = FileReader("src/main/resources/csv/input/SecIn.csv")
+                val cscIn = FileReader("src/main/resources/csv/input/CscIn.csv")
+                val sinIn = FileReader("src/main/resources/csv/input/SinIn.csv")
+                val lnIn = FileReader("src/main/resources/csv/input/LnIn.csv")
+                val log3In = FileReader("src/main/resources/csv/input/Log3In.csv")
+                val log5In = FileReader("src/main/resources/csv/input/Log5In.csv")
+                val log10In = FileReader("src/main/resources/csv/input/Log10In.csv")
 
                 var records: Iterable<CSVRecord> = CSVFormat.DEFAULT.parse(secIn)
                 for (record in records) {
@@ -107,33 +107,39 @@ internal class FunctionTest {
                         record[1].toDouble()
                     )
                 }
-                records = CSVFormat.DEFAULT.parse(cscIn )
+                records = CSVFormat.DEFAULT.parse(cscIn)
                 for (record in records) {
-                    Mockito.`when`<T>(cosMock.cos(record[0].toDouble(), functionEps)).thenReturn(
+                    `when`(cscMock.invoke(record[0].toDouble())).thenReturn(
                         record[1].toDouble()
                     )
                 }
                 records = CSVFormat.DEFAULT.parse(sinIn)
                 for (record in records) {
-                    Mockito.`when`<T>(sinMock.sin(record[0].toDouble(), functionEps)).thenReturn(
+                    `when`(sinMock.invoke(record[0].toDouble())).thenReturn(
                         record[1].toDouble()
                     )
                 }
                 records = CSVFormat.DEFAULT.parse(lnIn)
                 for (record in records) {
-                    Mockito.`when`<T>(lnMock.ln(record[0].toDouble(), functionEps)).thenReturn(
+                    `when`(lnMock.invoke(record[0].toDouble())).thenReturn(
                         record[1].toDouble()
                     )
                 }
-                records = CSVFormat.DEFAULT.parse(log2In)
+                records = CSVFormat.DEFAULT.parse(log3In)
                 for (record in records) {
-                    Mockito.`when`<T>(logMock.log(2, record[0].toDouble(), functionEps)).thenReturn(
+                    `when`(log3Mock.invoke(record[0].toDouble())).thenReturn(
+                        record[1].toDouble()
+                    )
+                }
+                records = CSVFormat.DEFAULT.parse(log5In)
+                for (record in records) {
+                    `when`(log5Mock.invoke(record[0].toDouble())).thenReturn(
                         record[1].toDouble()
                     )
                 }
                 records = CSVFormat.DEFAULT.parse(log10In)
                 for (record in records) {
-                    Mockito.`when`<T>(logMock.log(10, record[0].toDouble(), functionEps)).thenReturn(
+                    `when`(log10Mock.invoke(record[0].toDouble())).thenReturn(
                         record[1].toDouble()
                     )
                 }

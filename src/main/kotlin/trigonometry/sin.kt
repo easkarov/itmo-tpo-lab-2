@@ -1,5 +1,6 @@
 package trigonometry
 
+import kotlin.math.PI
 import kotlin.math.abs
 import kotlin.math.pow
 
@@ -24,10 +25,13 @@ class Sin: (Double) -> Double {
         var sinSum = 0.0
         var i = 0
 
-        while (abs(sinSum - kotlin.math.sin(x)) > ACCURACY) {
-            sinSum += ((-1.0).pow(i) * x.pow(2 * i + 1)) / factorial(2 * i + 1)
+        val x2 = x % (2 * PI)
+
+        while (abs(sinSum - kotlin.math.sin(x2)) > ACCURACY) {
+            sinSum += ((-1.0).pow(i) * x2.pow(2 * i + 1)) / factorial(2 * i + 1)
             i++
         }
         return sinSum
     }
 }
+

@@ -4,92 +4,71 @@ import log.Log3
 import log.Log5
 import org.apache.commons.csv.CSVFormat
 import org.apache.commons.csv.CSVRecord
-import org.junit.jupiter.api.Assertions
+import org.junit.jupiter.api.Assertions.assertEquals
 import org.junit.jupiter.api.BeforeAll
 import org.junit.jupiter.params.ParameterizedTest
 import org.junit.jupiter.params.provider.CsvFileSource
-import org.mockito.Mockito
-import org.mockito.Mockito.mock
+import org.mockito.kotlin.mock
 import org.mockito.Mockito.`when`
 import trigonometry.Csc
 import trigonometry.Sec
 import trigonometry.Sin
 import java.io.FileReader
 import java.io.IOException
-import java.io.Reader
 
-class FunctionTest {
+class SystemEquationTest {
     var eps: Double = 0.1
 
     @ParameterizedTest
     @CsvFileSource(resources = ["/csv/input/SystemIn.csv"])
-    fun testSystemWithMocks(value: Double, expected: Double) {
-//        val function = Function(secMock, lnMock, logMock)
+    fun `system without mocks`(value: Double, expected: Double) {
         val function = SystemEquation()
-        Assertions.assertEquals(expected, function(value), eps)
-//        Assertions.assertEquals(expected, function.SystemSolve(value, functionEps), eps)
-
-        /*
-        try {
-            Assertions.assertEquals(expected, function.writeResultToCSV(value, functionEps,
-                    new FileWriter("C:\\Users\\egorm\\IdeaProjects\\TpoLab2\\src\\main\\resources\\CsvFiles\\Outputs\\SystemOut.csv", true)), eps);
-        } catch (IOException e) {
-            System.err.println("Да как ты это делаешь ");
-        }
-*/
+        assertEquals(expected, function(value), eps)
     }
-//
-//    @ParameterizedTest
-//    @CsvFileSource(resources = ["/csv/input/SystemIn.csv"])
-//    fun testWithSec(value: Double, expected: Double) {
-//        val function = Function(Sec(cosMock), lnMock, logMock)
-//        Assertions.assertEquals(expected, function.SystemSolve(value, functionEps), eps)
-//    }
-//
-//    @ParameterizedTest
-//    @CsvFileSource(resources = ["/csv/input/SystemIn.csv"])
-//    fun testWithCos(value: Double, expected: Double) {
-//        val function = Function(Sec(Cos(sinMock)), lnMock, logMock)
-//        Assertions.assertEquals(expected, function.SystemSolve(value, functionEps), eps)
-//    }
-//
-//    @ParameterizedTest
-//    @CsvFileSource(resources = ["/csv/input/SystemIn.csv"])
-//    fun testWithSin(value: Double, expected: Double) {
-//        val function = Function(Sec(Cos(Sin())), lnMock, logMock)
-//        Assertions.assertEquals(expected, function.SystemSolve(value, functionEps), eps)
-//    }
-//
-//    @ParameterizedTest
-//    @CsvFileSource(resources = ["/csv/input/SystemIn.csv"])
-//    fun testWithLog(value: Double, expected: Double) {
-//        val function = Function(secMock, lnMock, Log(lnMock))
-//        Assertions.assertEquals(expected, function.SystemSolve(value, functionEps), eps)
-//    }
-//
-//    @ParameterizedTest
-//    @CsvFileSource(resources = ["/csv/input/SystemIn.csv"])
-//    fun testWithLn(value: Double, expected: Double) {
-//        val function = Function(secMock, Ln(), Log())
-//        Assertions.assertEquals(expected, function.SystemSolve(value, functionEps), eps * 20)
-//    }
-//
-//    @ParameterizedTest
-//    @CsvFileSource(resources = ["/csv/input/SystemIn.csv"])
-//    fun testWithSinAndLn(value: Double, expected: Double) {
-//        val function = Function()
-//        Assertions.assertEquals(expected, function.SystemSolve(value, functionEps), eps * 20)
-//    }
+
+    @ParameterizedTest
+    @CsvFileSource(resources = ["/csv/input/SystemIn.csv"])
+    fun `system with sec and csc mocks`(value: Double, expected: Double) {
+        val function = SystemEquation(
+            sec = secMock,
+            csc = cscMock,
+        )
+        assertEquals(expected, function(value), eps)
+    }
+
+    @ParameterizedTest
+    @CsvFileSource(resources = ["/csv/input/SystemIn.csv"])
+    fun `system with logs mocks`(value: Double, expected: Double) {
+        val function = SystemEquation(
+            log10 = log10Mock,
+            log3 = log3Mock,
+            log5 = log5Mock,
+            ln = log5Mock,
+        )
+        assertEquals(expected, function(value), eps)
+    }
+
+    @ParameterizedTest
+    @CsvFileSource(resources = ["/csv/input/SystemIn.csv"])
+    fun `system with ln mocks`(value: Double, expected: Double) {
+        val function = SystemEquation(
+            log10 = Log10(lnMock),
+            log3 = Log3(lnMock),
+            log5 = Log5(lnMock),
+            ln = lnMock,
+        )
+        assertEquals(expected, function(value), eps)
+    }
 
     companion object {
-        lateinit var secMock: Sec
-        lateinit var cscMock: Csc
-        lateinit var sinMock: Sin
+        var secMock: Sec = mock()
+        val cscMock: Csc = mock()
+        val sinMock: Sin = mock()
 
-        lateinit var lnMock: Ln
-        lateinit var log3Mock: Log3
-        lateinit var log5Mock: Log5
-        lateinit var log10Mock: Log10
+        val lnMock: Ln = mock()
+        val log3Mock: Log3 = mock()
+        val log5Mock: Log5 = mock()
+        val log10Mock: Log10 = mock()
 
         @JvmStatic
         @BeforeAll
@@ -97,7 +76,7 @@ class FunctionTest {
             try {
                 val secIn = FileReader("src/main/resources/csv/input/SecIn.csv")
                 val cscIn = FileReader("src/main/resources/csv/input/CscIn.csv")
-                val sinIn = FileReader("src/main/resources/csv/input/SinIn.csv")
+                val sinIn = FileReader("src/main/resources/vv/input/SinIn.csv")
                 val lnIn = FileReader("src/main/resources/csv/input/LnIn.csv")
                 val log3In = FileReader("src/main/resources/csv/input/Log3In.csv")
                 val log5In = FileReader("src/main/resources/csv/input/Log5In.csv")

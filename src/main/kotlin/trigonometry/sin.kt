@@ -35,3 +35,8 @@ class Sin: (Double) -> Double {
     }
 }
 
+fun main() {
+    val sin = Sin()
+    println(sin(-4.712388))
+}
+

@@ -7,6 +7,7 @@ import trigonometry.Csc
 import trigonometry.Sec
 import java.io.IOException
 import java.io.Writer
+import kotlin.math.PI
 import kotlin.math.pow
 
 class SystemEquation(
@@ -37,9 +38,4 @@ class SystemEquation(
         }
         return res
     }
-}
-
-fun main() {
-    println(SystemEquation(
-    ).invoke(2.0))
 }

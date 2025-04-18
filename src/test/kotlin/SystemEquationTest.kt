@@ -43,7 +43,7 @@ class SystemEquationTest {
             log10 = log10Mock,
             log3 = log3Mock,
             log5 = log5Mock,
-            ln = log5Mock,
+            ln = lnMock,
         )
         assertEquals(expected, function(value), eps)
     }
@@ -76,7 +76,7 @@ class SystemEquationTest {
             try {
                 val secIn = FileReader("src/main/resources/csv/input/SecIn.csv")
                 val cscIn = FileReader("src/main/resources/csv/input/CscIn.csv")
-                val sinIn = FileReader("src/main/resources/vv/input/SinIn.csv")
+                val sinIn = FileReader("src/main/resources/csv/input/SinIn.csv")
                 val lnIn = FileReader("src/main/resources/csv/input/LnIn.csv")
                 val log3In = FileReader("src/main/resources/csv/input/Log3In.csv")
                 val log5In = FileReader("src/main/resources/csv/input/Log5In.csv")

@@ -60,6 +60,16 @@ class SystemEquationTest {
         assertEquals(expected, function(value), eps)
     }
 
+    @ParameterizedTest
+    @CsvFileSource(resources = ["/csv/input/SystemIn.csv"])
+    fun `system with sin mocks`(value: Double, expected: Double) {
+        val function = SystemEquation(
+            sec = Sec(sinMock),
+            csc = Csc(sinMock)
+        )
+        assertEquals(expected, function(value), eps)
+    }
+
     companion object {
         var secMock: Sec = mock()
         val cscMock: Csc = mock()

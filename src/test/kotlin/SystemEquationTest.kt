@@ -21,8 +21,15 @@ class SystemEquationTest {
 
     @ParameterizedTest
     @CsvFileSource(resources = ["/csv/input/SystemIn.csv"])
-    fun `system without mocks`(value: Double, expected: Double) {
-        val function = SystemEquation()
+    fun `system with all mocks`(value: Double, expected: Double) {
+        val function = SystemEquation(
+            log10 = log10Mock,
+            log3 = log3Mock,
+            log5 = log5Mock,
+            ln = lnMock,
+            sec = secMock,
+            csc = cscMock
+        )
         assertEquals(expected, function(value), eps)
     }
 
@@ -67,6 +74,13 @@ class SystemEquationTest {
             sec = Sec(sinMock),
             csc = Csc(sinMock)
         )
+        assertEquals(expected, function(value), eps)
+    }
+
+    @ParameterizedTest
+    @CsvFileSource(resources = ["/csv/input/SystemIn.csv"])
+    fun `system without mocks`(value: Double, expected: Double) {
+        val function = SystemEquation()
         assertEquals(expected, function(value), eps)
     }
 

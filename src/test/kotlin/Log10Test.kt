@@ -18,7 +18,10 @@ class Log10Test {
     @Test
     fun `test log function`() {
         assertEquals(0.0, log(1.0), delta)
+        assertEquals(-0.244, log(0.56961), delta)
         assertEquals(1.0, log(10.0), delta)
+        assertEquals(0.077, log(1.194), delta)
         assertEquals(2.0, log(100.0), delta)
+        assertEquals(0.903, log(8.0), delta)
     }
 }
